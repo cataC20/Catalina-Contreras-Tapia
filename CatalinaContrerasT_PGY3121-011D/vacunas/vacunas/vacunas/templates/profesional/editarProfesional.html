@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>Vacunémonos</title>
+  {% load static %}
+  <link rel="icon" href="{% static 'img/escudo_comuna.ico' %}">
+  <link rel="stylesheet" href="./../static/css/style.css">
+</head>
+
+<body class="bkgrHomePro">
+  {% include "profesional/header_pro.html" %}
+  <div class="container homeCont">
+    <div class="row justify-content-center">
+      <div class="col-8 col-lg-4">
+        <img src="{% static 'img/banner_mevacuno.png' %}" class="img-fluid" alt="banner">
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center h-75">
+      <div class="col-12 col-lg-8 text-center bg-white p-4 rounded-3 shadow">
+        <h3 class="mb-5">Editar profesional</h3>
+        <p class="mb-5">Ingrese los datos que desee editar:</p>
+        <div class="mb-5">
+          {% if profesional %}
+          {% for pro in profesional %}
+          <form method="GET" name="formularioEdicion" class="row g-1">
+            <div class="form-floating mb-3 col-12 col-lg-6">
+              <input type="text" readonly class="form-control" placeholder="Ingrese rut" id="inputRut" name="rut" value="{{pro.rut}}">
+              <label for="floatingInput">Rut</label>
+            </div>
+            <div class="form-floating mb-3 col-12 col-lg-6">
+              <input type="text" class="form-control" placeholder="Ingrese nombre" id="inputNombre" name="nombre" value={{pro.nombre}}>
+              <label for="floatingInput">Nombre</label>
+            </div>
+            <div class="form-floating mb-3 col-12 col-lg-6">
+              <input type="text" class="form-control" placeholder="Ingrese apellido paterno" id="inputApp" name="appaterno" value={{pro.appaterno}}>
+              <label for="floatingInput">Apellido paterno</label>
+            </div>
+            <div class="form-floating mb-3 col-12 col-lg-6">
+              <input type="text" class="form-control" placeholder="Ingrese apellido materno" id="inputApm" name="apmaterno" value={{pro.apmaterno}}>
+              <label for="floatingInput">Apellido materno</label>
+            </div>
+            <div class="form-floating mb-3 col-12 col-lg-4">
+              <input type="text" class="form-control" id="inputFecha" name="fechanacto" value={{pro.fechanacto|date:"Y-m-d"}}>
+              <label for="floatingInput">Fecha de nacimiento</label>
+            </div>
+            <div class="form-floating mb-3 col-12 col-lg-4">
+              <input type="text" class="form-control" placeholder="Ingrese profesión" id="inputProfesion" name="profesion" value={{pro.profesion}}>
+              <label for="floatingInput">Profesión</label>
+            </div>
+            <div class="form-floating mb-3 col-12 col-lg-4">
+              <input type="text" class="form-control" placeholder="Ingrese email" id="inputVacuna" name="email" value={{pro.email}}>
+              <label for="floatingInput">Email</label>
+            </div>
+
+            <div class="form-group row g-1 justify-content-between">
+              <div class="col-4 col-lg-2">
+                <a role="button" href="/profesional" class="btn btn-outline-secondary w-100">Volver</a>
+              </div>
+              <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="javascript:void(editarProfesional())">Guardar</button>
+              </div>
+            </div>
+          </form>
+          {% endfor %}
+          {% endif %}
+          {% if mensaje %}
+          <h6 class="mb-5">{{ mensaje }}</h6>
+          <div class="form-group row g-1 justify-content-between">
+            <div class="col-4 col-lg-2">
+              <a role="button" href="/profesional" class="btn btn-outline-secondary w-100">Volver</a>
+            </div>
+            <div class="col-auto">
+              <a role="button" href="/listar_profesionales" class="btn btn-outline-warning w-100">Listar profesionales</a>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        <div class="col-5 col-lg-2 mx-auto">
+          <img src="{% static 'img/logoMaule.png' %}" class="img-fluid" alt="comuna">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% include "scripts.html" %}
+  <script>
+    function changeType() {
+      document.getElementById('inputFecha').type = 'date';
+    }
+  </script>
+</body>
+
+</html>
